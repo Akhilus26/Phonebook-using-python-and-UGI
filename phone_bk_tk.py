@@ -37,7 +37,6 @@ def exception_framer():
         inner_details_frame.destroy()
     exception_frame=Frame(sub_frame)
 
-
 #-----------------other Function----------------------#
 def search_function(name):
     try:
@@ -67,29 +66,43 @@ def search_function(name):
         
 
     except:
-        exception_framer()
-        exception_frame.grid(row=3,column=0,columnspan=4)
-        except_label=Label(exception_frame,text="Name not found",fg="red")
-        except_label.grid(row=3,column=0,columnspan=4)
+        excepte_fun
 
-        
-    
-
-
+def excepte_fun():
+    exception_framer()
+    exception_frame.grid(row=3,column=0,columnspan=4)
+    except_label=Label(exception_frame,text="Name not found",fg="red")
+    except_label.grid(row=3,column=0,columnspan=4)
 #------------------ delete part----------------------#
+def deleted_click(name):
+    os.remove(f"{path}/{name}.txt")
+    
+    deleted_status=Label(sub_frame,text="Deleted",fg="red")
+    deleted_status.grid(row=7,column=0,columnspan=4)
+
+    delete_name_entry.delete(0,END)
+
+def delete_info(name):
+    try:
+        search_function(name)
+
+        for_deleting_button=Button(inner_details_frame,text="Press me for Deleting",fg="white",bg="red", command=lambda:deleted_click(name))
+        for_deleting_button.grid(row=6,column=0,columnspan=4,padx=10,pady=10)
+    except:
+        excepte_fun()
+
 def delete_button_click():
+
     sub_framer("delete")
+    global delete_name_entry
     delete_name_label=Label(sub_frame,text="delete name")
     delete_name_label.grid(row=1,column=0,padx=10)
 
-    delete_name=Entry(sub_frame)
-    delete_name.grid(row=1,column=2,padx=20,pady=10)
+    delete_name_entry=Entry(sub_frame)
+    delete_name_entry.grid(row=1,column=2,padx=20,pady=10)
 
-    delete_submit_button=Button(sub_frame,text="Delete")
+    delete_submit_button=Button(sub_frame,text="Next", command=lambda:delete_info(delete_name_entry.get()))
     delete_submit_button.grid(row=2,column=2,pady=10)
-
-
-
 
 #-------------------------Update Button----------------------------#
 def update_submit_button_click(name,phone_number,update_name):
@@ -102,9 +115,6 @@ def update_submit_button_click(name,phone_number,update_name):
     # edit_page_exit_button=Button(sub_frame,text="Back",command=sub_frame.quit())
     # edit_page_exit_button.grid(row=3,column=0,padx=10,pady=10)
     
-
-
-
 def for_editing(update_name):
     sub_framer("Editing page")
     Edit_name_label=Label(sub_frame,text="Name")
@@ -132,18 +142,14 @@ def for_editing(update_name):
     Edited_phonenum_entry.insert(0,phone)
 
 def update_next_click():
-   
-    name=update_name.get()
-    search_function(name)
+   try:
+        name=update_name.get()
+        search_function(name)
 
-    for_editing_button=Button(inner_details_frame,text="Press me for Editing",fg="white",bg="#000C8C",command=lambda:for_editing(name))
-    for_editing_button.grid(row=6,column=0,columnspan=4,padx=10,pady=10)
- 
-        
-
-    # update_name.delete(0,END)
-
-        
+        for_editing_button=Button(inner_details_frame,text="Press me for Editing",fg="white",bg="#000C8C",command=lambda:for_editing(name))
+        for_editing_button.grid(row=6,column=0,columnspan=4,padx=10,pady=10)
+   except:
+        excepte_fun()
 
 def update_button_click():
     global update_name
